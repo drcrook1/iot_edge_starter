@@ -7,6 +7,9 @@ import logging
 import asyncio
 
 from azure.iot.device.aio import IoTHubModuleClient
+from azure.iot.device import MethodResponse
+
+# TODO: Module 2 Module Comms & Upstream Telemetry/Messages
 
 class Sample_Twin_Properties():
     """
@@ -40,9 +43,9 @@ class Sample_Module():
         # Configure Client & Handlers
         self.module_client = IoTHubModuleClient.create_from_edge_environment()
         self.module_client.on_twin_desired_properties_patch_received = self._receive_twin_patch_handler
-        
+        self.module_client.on_method_request_received = self._hello_module_command
 
-    def _receive_twin_patch_handler(self, twin_patch):
+    async def _receive_twin_patch_handler(self, twin_patch):
         """
         Receive a twin patch update.
         """
@@ -53,3 +56,12 @@ class Sample_Module():
         if("SleepTime" in twin_patch):
             self.module_twin_properties.SleepTime = twin_patch["SleepTime"]
         self.module_client.patch_twin_reported_properties(self.Sample_Twin_Properties.to_dict())
+
+    async def _hello_module_command(self, method_request):
+        """
+        Receive and handle a method request/command, note, 
+        you must respond to the command for it to read as success, otherwise it will fail.
+        """
+        print("HELLO!!!!!")
+        method_response = MethodResponse.create_from_method_request(method_request, 200, "HELLO!!!!")
+        await self.module_client.send_method_response(method_response)
