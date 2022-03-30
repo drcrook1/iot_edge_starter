@@ -55,7 +55,7 @@ class Sample_Module():
         # Did they update Temperature Threshold?
         if("SleepTime" in twin_patch):
             self.module_twin_properties.SleepTime = twin_patch["SleepTime"]
-        self.module_client.patch_twin_reported_properties(self.Sample_Twin_Properties.to_dict())
+        self.module_client.patch_twin_reported_properties(self.module_twin_properties.to_dict())
 
     async def _hello_module_command(self, method_request):
         """
