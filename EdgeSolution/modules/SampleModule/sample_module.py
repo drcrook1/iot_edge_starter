@@ -17,7 +17,7 @@ class Sample_Twin_Properties():
     """
     SleepTime : int = None
 
-    def to_dict() -> dict:
+    def to_dict(self) -> dict:
         """
         returns a dictionary representation
         """
@@ -55,7 +55,7 @@ class Sample_Module():
         # Did they update Temperature Threshold?
         if("SleepTime" in twin_patch):
             self.module_twin_properties.SleepTime = twin_patch["SleepTime"]
-        self.module_client.patch_twin_reported_properties(self.module_twin_properties.to_dict())
+        await self.module_client.patch_twin_reported_properties({"SleepTime" : self.module_twin_properties.SleepTime})
 
     async def _hello_module_command(self, method_request):
         """
