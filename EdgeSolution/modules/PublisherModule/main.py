@@ -2,14 +2,14 @@ import asyncio
 import sys
 import signal
 import threading
-from sample_module import Sample_Module
+from publisher_module import Publisher_Module
 
 async def run_sample():
-    module = Sample_Module()
+    module = Publisher_Module()
     module.initialize()
     while(True):
-        print("sleeping for {}".format(module.module_twin_properties.SleepTime))
-        await asyncio.sleep(module.module_twin_properties.SleepTime)
+        await asyncio.sleep(module.module_twin_properties.PublishRate)
+        await module._publish_telemetry()
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
