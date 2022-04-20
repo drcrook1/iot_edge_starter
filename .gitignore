@@ -3,6 +3,12 @@
 
 */*/build_push.cmd
 
+.vscode/
+.devcontainer/
+
+*.env
+
+
 # Object files
 *.o
 *.ko
