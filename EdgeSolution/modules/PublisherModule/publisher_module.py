@@ -74,10 +74,10 @@ class Publisher_Module():
         Publishes messages over a route to iot edge hub.
         """
         wind_speed = str(random.randint(0, 50))
-        msg = Message("{'windspeed' : {}}".format(wind_speed))
+        msg = Message("'windspeed' : {}".format(wind_speed))
         msg_id = uuid.uuid4()
         msg.message_id = msg_id
         msg.correlation_id = str(msg_id)
         msg.custom_properties["sample-property"] = "sample"
-        await self.module_client.send_message(msg)
+        await self.module_client.send_message_to_output(msg, "PublisherToSample")
         print("sent message with windspeed: {}".format(wind_speed))

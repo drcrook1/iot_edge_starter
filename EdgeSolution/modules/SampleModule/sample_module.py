@@ -44,7 +44,14 @@ class Sample_Module():
         self.module_client = IoTHubModuleClient.create_from_edge_environment()
         self.module_client.on_twin_desired_properties_patch_received = self._receive_twin_patch_handler
         self.module_client.on_method_request_received = self._hello_module_command
+        self.module_client.on_message_received = self._handle_message_received
 
+    def _handle_message_received(self, message):
+        """
+        Handler for receiving a message
+        """
+        print("input: {} - data: {} - properties: {}".format(message.input_name, message.data, message.custom_properties))
+    
     async def _receive_twin_patch_handler(self, twin_patch):
         """
         Receive a twin patch update.

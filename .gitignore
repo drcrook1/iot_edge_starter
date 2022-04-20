@@ -1,7 +1,7 @@
 # Prerequisites
 *.d
 
-build_push.cmd
+*/*/build_push.cmd
 
 # Object files
 *.o
